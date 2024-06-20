@@ -51,10 +51,37 @@ public class AverageSensor implements Sensor{
 
     @Override
     public int read() throws IllegalStateException {
+        if (!(this.isOn())) {
+            throw new IllegalStateException("Turn all sensors on to read them");
+        }
+        if (this.sensors.size() == 0) {
+            throw new IllegalStateException("Add a sensor to the Average sensor");
+        }
+
         return this.sensors
                 .stream()
                 .map(sensor->sensor.read())
                 .reduce(0,  (a, b)-> a+b) / this.sensors.size();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder("[ ");
+        for (Sensor sensor: this.sensors) {
+            builder.append(sensor.isOn()).append(": ");
+            builder.append(sensor.read()).append(" ,");
+        }
+        builder.append("] ");
+        return builder.toString();
+    }
+
+    public String printSensorStates() {
+        StringBuilder builder = new StringBuilder("[ ");
+        for (Sensor sensor: this.sensors) {
+            builder.append(sensor.isOn()).append(" ,");
+        }
+        builder.append(" ]");
+        return builder.toString();
     }
 }
 

@@ -5,6 +5,7 @@ import java.util.Random;
 public class TemperatureSensor implements Sensor{
 
     boolean state;
+    int degree;
 
     public TemperatureSensor() {
         this.state = false;
@@ -35,4 +36,5 @@ public class TemperatureSensor implements Sensor{
             return random.nextInt(61) - 31;
         }
     }
+
 }
